@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Acesso</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Simulação de Controle de Acesso</h2>
+        <div class="form-group">
+            <label for="cartao">Número do Cartão RFID:</label>
+            <input type="text" id="cartao" placeholder="Digite o número do cartão">
+            <button onclick="validarAcesso()">Verificar Acesso</button>
+        </div>
+        <div id="status"></div>
+        
+        <a href="cadastro.html" class="cadastro-link">Ir para Cadastro de Visitantes</a>
+    </div>
+
+    <script>
+        let visitantes = JSON.parse(localStorage.getItem("visitantes")) || [];
+        
+        function validarAcesso() {
+            let cartao = document.getElementById("cartao").value.trim();
+            let status = document.getElementById("status");
+            
+            // Encontrar o visitante pelo número do cartão
+            let visitante = visitantes.find(v => v.cartao === cartao);
+            
+            if (visitante) {
+                status.innerHTML = `<span class='success'>Acesso Liberado para ${visitante.nome}!</span>`;
+            } else {
+                status.innerHTML = "<span class='error'>Acesso Negado!</span>";
+            }
+        }
+    </script>
+</body>
+</html>
